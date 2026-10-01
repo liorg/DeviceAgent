@@ -1,1 +1,3 @@
-
+<resources>
+    <string name="accessibility_desc">שירות אוטומציה להשלמת צימוד WhatsApp (PoC) — פועל רק בעת לחיצה על כפתור האוטומציה.</string>
+</resources>
