@@ -11,7 +11,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import bot.grossman.DeviceAgent.data.AuthRepository
-import bot.grossman.DeviceAgent.data.UserCacheManager
 import bot.grossman.DeviceAgent.monitor.StatusSyncWorker
 import bot.grossman.DeviceAgent.ui.AuthScreen
 import bot.grossman.DeviceAgent.ui.PairScreen
@@ -38,11 +37,9 @@ class MainActivity : ComponentActivity() {
 fun AppNav() {
     val nav = rememberNavController()
     val ctx = androidx.compose.ui.platform.LocalContext.current
-    
-    // ניווט התחלתי תלוי גם בהתחברות ל-Supabase וגם ב-Cache של פרטי המכשיר והטלפון
     val start = remember {
-        if (AuthRepository.currentUserId() != null && UserCacheManager.isConnected(ctx)) {
-            StatusSyncWorker.schedule(ctx) 
+        if (AuthRepository.currentUserId() != null) {
+            StatusSyncWorker.schedule(ctx)   // סנכרון תקופתי למחוברים
             Routes.STATUS
         } else Routes.AUTH
     }

@@ -6,7 +6,6 @@ import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.gotrue.Auth
 import io.github.jan.supabase.gotrue.auth
 import io.github.jan.supabase.gotrue.providers.builtin.Email
-import io.github.jan.supabase.gotrue.providers.Google
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.serialization.Serializable
@@ -21,6 +20,7 @@ object SupabaseModule {
     }
 }
 
+/** שורה בטבלה device_status ב-Supabase */
 @Serializable
 data class DeviceStatusRow(
     val user_id: String,
@@ -46,12 +46,6 @@ object AuthRepository {
             this.email = email
             this.password = password
         }
-    }
-    
-    // התחברות גוגל - Supabase מנהל את פתיחת הדפדפן להזדהות OAUTH
-    suspend fun signInWithGoogle() {
-        // הערה: נדרש להגדיר OAuth ב-Supabase
-        SupabaseModule.client.auth.signInWith(Google)
     }
 
     suspend fun signOut() = SupabaseModule.client.auth.signOut()
